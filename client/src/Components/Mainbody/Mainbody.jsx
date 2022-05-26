@@ -1,9 +1,9 @@
-import "./Mainbody.css"
 import { useState } from "react"
+import "./Mainbody.css"
 
 function Mainbody () {
     
-	const { imperial, setImperial } = useState({
+	const [ imperial, setImperial ] = useState({
 		km: 0,
 		m: 0,
 		dm: 0,
@@ -11,28 +11,66 @@ function Mainbody () {
 		mm: 0,
 	})
 
-	const { imp, setImp } = useState({
-		km: 0,
-		m: 0,
-		dm: 0,
-		sm: 0,
-		mm: 0,
-	})
+	const [ currentUnit, setCurrentUnit ] = useState('km')
 
 	function insertImperial(e){
-		let value = e.target.value
+		let { value } = e.target
+	
+		switch (currentUnit){
+			case "km":
+				setImperial({
+					km: value,
+					m: value*1000,
+					dm: value*10000,
+					sm: value*100000,
+					mm: value*1000000,
+				})
+				break;
+			case "m":
+				setImperial({
+					km: value/1000,
+					m: value,
+					dm: value*10,
+					sm: value*100,
+					mm: value*1000,
+				})
+				break;
+			case "dm":
+				setImperial({
+					km: value/10000,
+					m: value/10,
+					dm: value,
+					sm: value*10,
+					mm: value*100,
+				})
+				break;
+			case "sm":
+				setImperial({
+					km: value/100000,
+					m: value/100,
+					dm: value/10,
+					sm: value,
+					mm: value*10
+				})
+				break;
+			case "mm":
+				setImperial({
+					km: value/1000000,
+					m: value/1000,
+					dm: value/100,
+					sm: value/10,
+					mm: value,
+				})
+				break;
+				default:
+					console.error("Some error happened in switch case!")
+					break;
+			}
+	}
 
-		if (value == Math.E ) {
-			console.log("exponential")
-			return
-		}
-
-		if (value < 0) {
-			console.log("Number cannot be less than 0")
-			return
-		}
-
-		console.log(value)
+	function selectOption(e) {
+		setCurrentUnit(Number(e.target.value))
+		console.log(imperial)
 	}
 
 	return (
@@ -52,30 +90,36 @@ function Mainbody () {
 							placeholder={0}
 							onChange={e => insertImperial(e)}
 							type={"number"}
-							defaultValue={ imp.km }
 						/>
 						<select
 							className={"l_select l_select_1"}
 							name='imperial'
-							id='imperial'>
-							<option default  value='km'>km</option>
+							id='imperial'
+							onChange={e => selectOption(e)}
+							defaultValue={"km"}	
+						>
+							<option value='km'>km</option>
 							<option value='m'>m</option>
 							<option value='dm'>dm</option>
 							<option value='sm'>sm</option>
 							<option value='mm'>mm</option>
 						</select>
 						<input
-							className={"l_input l_input_2"}
+							className={"l_input l_input_2 noselect"}
 							placeholder={0}
-							defaultValue={imp.m}
 							type={"number"}
+							readOnly
 						/>
 						<select
-							className={"l_select l_select_2"}
+							className={"l_select l_select_2 noselect"}
 							name='metric'
-							id='metric'>
+							id='metric'
+							onSelect={e => selectOption(e)}
+							defaultValue={"m"}
+							readOnly
+						>
 							<option value='km'>km</option>
-							<option default value='m'>m</option>
+							<option value='m'>m</option>
 							<option value='dm'>dm</option>
 							<option value='sm'>sm</option>
 							<option value='mm'>mm</option>
