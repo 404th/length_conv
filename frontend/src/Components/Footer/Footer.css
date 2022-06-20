@@ -1,0 +1,28 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 50px 0;
+}
+
+.footer .convert_button {
+    width: 150px;
+    height: 70px;
+    background-color: #fff;
+    outline: none !important;
+    border: 2px solid black;
+    font-family: 'Indie Flower', cursive;
+    font-weight: 1000;
+    font-size: 20px;
+}
+
+.convert_button:hover {
+    background-color: #f0f0f0;
+}
+
+.convert_button:active {
+    background-color: #fff;
+}
+
